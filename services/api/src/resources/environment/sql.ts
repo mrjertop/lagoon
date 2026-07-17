@@ -176,11 +176,9 @@ export const Sql = {
       })
       .toString(),
   selectEnvironmentByOpenshiftProjectName: (openshiftProjectName: string) =>
-    knex('environment AS e')
-      .select('e.*')
-      .join('project', 'e.project', '=', 'project.id')
-      .where(knex.raw('e.openshift_project_name = ?', openshiftProjectName))
-      .andWhere('e.deleted', '0000-00-00 00:00:00')
+    knex('environment')
+      .where('openshift_project_name', openshiftProjectName)
+      .andWhere('deleted', '0000-00-00 00:00:00')
       .toString(),
   canSshToEnvironment: (openshiftProjectName: string) =>
     knex('environment AS e')
